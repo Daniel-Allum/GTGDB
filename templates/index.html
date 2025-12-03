@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<h2>Add a new guess</h2>
 <div class="container">
 
     <p>Welcome to GuessThe.Game Database (aka. GTGDB). This website is dedicated to the hard working Year 12 SE students
@@ -12,6 +12,7 @@
     {% if session["username"] %}    
         <br>
         <p>Hello {{ session['username'] }}</p>
+        <a href="/add"><button>Add guess</button></a>
     {% endif %}
 </div>
 

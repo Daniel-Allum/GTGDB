@@ -41,5 +41,21 @@ def RegisterUser(username, password):
         ),
     )
     db.commit()
+    return True
 
+
+def AddGuess(user_id, date, game, score):
+    if date is None or game is None:
+        return False
+    db = GetDB()
+    db.execute(
+        "INSERT INTO Guesses(user_id, date, game, score) VALUES(?, ?, ?, ?)",
+        (
+            user_id,
+            date,
+            game,
+            score,
+        ),
+    )
+    db.commit()
     return True

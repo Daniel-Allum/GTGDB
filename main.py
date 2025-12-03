@@ -16,8 +16,10 @@ def Login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if db.CheckLogin(username, password):
-            session["username"] = username
+        user = db.CheckLogin(username, password)
+        if user:
+            session["username"] = user["username"]
+            session["id"] = user["id"]
             return redirect("/")
     return render_template("login.html")
 
@@ -36,6 +38,17 @@ def Register():
         if db.RegisterUser(username, password):
             return redirect("/")
     return render_template("register.html")
+
+
+@app.route("/add", methods=["GET", "POST"])
+def Add():
+    if request.method == "POST":
+        user_id = session["id"]
+        date = request.form["date"]
+        game = request.form["game"]
+        score = request.form["score"]
+        db.AddGuess(user_id, date, game, score)
+    return render_template("add.html")
 
 
 app.run(debug=True, port=5000)
