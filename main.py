@@ -42,6 +42,8 @@ def Register():
 
 @app.route("/add", methods=["GET", "POST"])
 def Add():
+    if session.get("username") == None:
+        return redirect("/")
     if request.method == "POST":
         user_id = session["id"]
         date = request.form["date"]
