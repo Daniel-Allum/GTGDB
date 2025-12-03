@@ -16,10 +16,8 @@ def Login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        user = db.CheckLogin(username, password)
-        if user:
-            session["id"] = user["id"]
-            session["username"] = user["username"]
+        if db.CheckLogin(username, password):
+            session["username"] = username
             return redirect("/")
     return render_template("login.html")
 
@@ -28,6 +26,16 @@ def Login():
 def Logout():
     session.clear()
     return redirect("/")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def Register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if db.RegisterUser(username, password):
+            return redirect("/")
+    return render_template("register.html")
 
 
 app.run(debug=True, port=5000)

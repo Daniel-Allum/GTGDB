@@ -24,5 +24,22 @@ def CheckLogin(username, password):
     if user is not None:
         if check_password_hash(user["password"], password):
             return user
-
     return None
+
+
+def RegisterUser(username, password):
+    if username is None or password is None:
+        return False
+
+    db = GetDB()
+    hash = generate_password_hash(password)
+    db.execute(
+        "INSERT INTO Users(username, password) VALUES(?, ?)",
+        (
+            username,
+            hash,
+        ),
+    )
+    db.commit()
+
+    return True
