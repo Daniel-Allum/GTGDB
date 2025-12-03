@@ -13,3 +13,16 @@ def GetAllGuesses():
     guesses = db.execute("SELECT * FROM Guesses").fetchall()
     db.close()
     return guesses
+
+
+def CheckLogin(username, password):
+    db = GetDB()
+    user = db.execute(
+        "SELECT * FROM Users WHERE username=? COLLATE NOCASE", (username,)
+    ).fetchone()
+
+    if user is not None:
+        if check_password_hash(user["password"], password):
+            return user
+
+    return None

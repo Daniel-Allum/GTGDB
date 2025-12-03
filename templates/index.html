@@ -9,6 +9,10 @@
             href="https://guessthe.game/">GuessThe.Game</a> and scream their suggestions at the host. Let's start
         tracking their progress.</p>
 
+    {% if session["username"] %}    
+        <br>
+        <p>Hello {{ session['username'] }}</p>
+    {% endif %}
 </div>
 
 <br>
